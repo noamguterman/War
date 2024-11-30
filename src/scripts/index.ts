@@ -1,19 +1,29 @@
 import '../style.css'
 
-interface Card {
+type DeckResponse = {
+  deck_id: string
+  remaining: number
+}
+
+type DrawResponse = {
+  remaining: number
+  cards: { image: string; value: string }[]
+}
+
+type Card = {
   value: string
 }
 
-let deckId: string
+let deckId: string | null = null
 let computerScore = 0
 let myScore = 0
-const cardsContainer = document.getElementById('cards')
-const newDeckBtn = document.getElementById('new-deck') as HTMLButtonElement
-const drawCardBtn = document.getElementById('draw-cards') as HTMLButtonElement
-const header = document.getElementById('header')
-const remainingText = document.getElementById('remaining')
-const computerScoreEl = document.getElementById('computer-score')
-const myScoreEl = document.getElementById('my-score')
+const cardsContainer = document.getElementById('cards') as HTMLElement | null
+const newDeckBtn = document.getElementById('new-deck') as HTMLButtonElement | null
+const drawCardBtn = document.getElementById('draw-cards') as HTMLButtonElement | null
+const header = document.getElementById('header') as HTMLElement | null
+const remainingText = document.getElementById('remaining') as HTMLElement | null
+const computerScoreEl = document.getElementById('computer-score') as HTMLElement | null
+const myScoreEl = document.getElementById('my-score') as HTMLElement | null
 
 newDeckBtn!.addEventListener('click', initGame)
 drawCardBtn!.addEventListener('click', drawCards)
@@ -34,14 +44,14 @@ function initGame() {
 
 async function getDeck() {
   const res = await fetch('https://apis.scrimba.com/deckofcards/api/deck/new/shuffle/')
-  const data = await res.json()
+  const data: DeckResponse = await res.json()
   remainingText!.textContent = `Remaining cards: ${data.remaining}`
   deckId = data.deck_id
 }
 
 async function drawCards() {
   const res = await fetch(`https://apis.scrimba.com/deckofcards/api/deck/${deckId}/draw/?count=2`)
-  const data = await res.json()
+  const data: DrawResponse = await res.json()
   remainingText!.textContent = `Remaining cards: ${data.remaining}`
   cardsContainer!.children[0].innerHTML = `
       <img src=${data.cards[0].image} class='card'>
