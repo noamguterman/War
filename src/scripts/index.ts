@@ -15,15 +15,15 @@ type Card = {
 }
 
 let deckId: string | null = null
-let computerScore = 0
-let myScore = 0
-const cardsContainer = document.getElementById('cards') as HTMLElement | null
+let computerScore: number = 0
+let myScore: number = 0
+const cardsContainer: HTMLElement | null = document.getElementById('cards')
+const header: HTMLElement | null = document.getElementById('header')
+const remainingText: HTMLElement | null = document.getElementById('remaining')
+const computerScoreEl: HTMLElement | null = document.getElementById('computer-score')
+const myScoreEl: HTMLElement | null = document.getElementById('my-score')
 const newDeckBtn = document.getElementById('new-deck') as HTMLButtonElement | null
 const drawCardBtn = document.getElementById('draw-cards') as HTMLButtonElement | null
-const header = document.getElementById('header') as HTMLElement | null
-const remainingText = document.getElementById('remaining') as HTMLElement | null
-const computerScoreEl = document.getElementById('computer-score') as HTMLElement | null
-const myScoreEl = document.getElementById('my-score') as HTMLElement | null
 
 newDeckBtn!.addEventListener('click', initGame)
 drawCardBtn!.addEventListener('click', drawCards)
